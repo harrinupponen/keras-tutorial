@@ -97,7 +97,7 @@ rounded_predictions = model.predict_classes(scaled_test_samples, batch_size=10, 
 """ for i in rounded_predictions:
     print(i) """
 
-#-------------------------Confusion Matrix---------------------------
+#-------------------------Create Confusion Matrix---------------------------
 
 from sklearn.metrics import confusion_matrix
 import itertools
@@ -134,6 +134,28 @@ def plot_confusion_matrix(cm, classes, normalize=False, title='Confusion matrix'
     plt.ylabel('True label')
     plt.xlabel('Predicted label')
 
+#----------------- Use Confusion Matrix---------------------
+
 cm_plot_labels = ['no_side_effects', 'had_side_effects']
 plot_confusion_matrix(cm, cm_plot_labels, title='Confusion Matrix')
-plt.show()
+#plt.show()
+
+#-------------------------Save Model, 3 different ways--------------------
+
+#1.
+model.save('medical_trial_model.h5')  #Saves the architechture, the weights, training conf
+                                    #(as loss, optimizer), the state of the optimizer so
+                                    # you can continue from where you left last time
+
+from keras.models import load_model
+new_model = load_model('medical_trial_model.h5')
+
+#new_model.summary()
+
+#2.
+#model.to_json() if you only need the architechture
+
+#3.
+#model.save_weights() for only weights of the model
+
+
