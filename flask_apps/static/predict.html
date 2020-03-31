@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Men&Women Prediction</title>
+</head>
+<body>
+    <input id="image-selector" type="file">
+    <button id="predict-button">Predict</button>
+    <p><strong>Predictions</strong></p>
+    <p>Man: <span id="man-prediction"></span></p>
+    <p>Woman: <span id="woman-prediction"></span></p>
+    <img id="selected-image" src="" alt="selected-image">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+    <script>
+        let base64Image;
+        $('#image-selector').change(function() {
+            let reader = new FileReader();
+            reader.onload = function(e) {
+                let dataURL = reader.result;
+                $('#selected-image').attr('src', dataURL);
+                base64Image = dataURL.replace('data:image/png;base64,', '');
+                console.log(base64Image);
+            }
+            reader.readAsDataURL($('#image-selector')[0].files[0]);
+            $('#man-prediction').text('');
+            $('#woman-prediction').text('');
+        });
+
+        $('#predict-button').click(function(event) {
+            let message = {
+                image: base64Image
+            }
+            console.log(message);
+            $.post('http://localhost:5000/predict', JSON.stringify(message),
+            function(response) {
+                $('#man-prediction').text(response.prediction.man.toFixed(6));
+                $('#woman-prediction').text(response.prediction.woman.toFixed(6));
+                console.log(response);
+            });
+        });
+    </script>
+</body>
+</html>

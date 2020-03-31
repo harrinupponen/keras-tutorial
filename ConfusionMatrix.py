@@ -138,17 +138,17 @@ def plot_confusion_matrix(cm, classes, normalize=False, title='Confusion matrix'
 
 cm_plot_labels = ['no_side_effects', 'had_side_effects']
 plot_confusion_matrix(cm, cm_plot_labels, title='Confusion Matrix')
-#plt.show()
+plt.show()
 
 #-------------------------Save Model, 3 different ways--------------------
 
 #1.
-model.save('medical_trial_model.h5')  #Saves the architechture, the weights, training conf
+#model.save('medical_trial_model.h5')  #Saves the architechture, the weights, training conf
                                     #(as loss, optimizer), the state of the optimizer so
                                     # you can continue from where you left last time
 
-from keras.models import load_model
-new_model = load_model('medical_trial_model.h5')
+#from keras.models import load_model
+#new_model = load_model('medical_trial_model.h5')
 
 #new_model.summary()
 

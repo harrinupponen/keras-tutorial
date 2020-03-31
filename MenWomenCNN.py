@@ -55,9 +55,9 @@ test_images, test_labels = next(test_batches)
 #plt.show()
 #print(test_labels)
 predictions = model.predict_generator(test_batches, steps=1, verbose=0)
-#print(predictions)
+print(predictions)
 
-cm = confusion_matrix(test_labels, predictions[:,0])
+cm = confusion_matrix(test_labels, predictions)
 
 def plot_confusion_matrix(cm, classes, normalize=False, title='Confusion matrix', cmap=plt.cm.Blues):
 
