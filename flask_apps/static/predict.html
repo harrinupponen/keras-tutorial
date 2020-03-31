@@ -22,7 +22,7 @@
             reader.onload = function(e) {
                 let dataURL = reader.result;
                 $('#selected-image').attr('src', dataURL);
-                base64Image = dataURL.replace('data:image/png;base64,', '');
+                base64Image = dataURL.replace('data:image/png;base64,', '').replace('data:image/jpeg;base64,', '');
                 console.log(base64Image);
             }
             reader.readAsDataURL($('#image-selector')[0].files[0]);
@@ -37,8 +37,8 @@
             console.log(message);
             $.post('http://localhost:5000/predict', JSON.stringify(message),
             function(response) {
-                $('#man-prediction').text(response.prediction.man.toFixed(6));
-                $('#woman-prediction').text(response.prediction.woman.toFixed(6));
+                $('#man-prediction').text((100 * (response.prediction.man)).toFixed(2) + '%');
+                $('#woman-prediction').text((100 * (response.prediction.woman)).toFixed(2) + '%');
                 console.log(response);
             });
         });
