@@ -1,3 +1,7 @@
+#Remember import "tensorflow.keras....." not "keras...."
+#Also remember to save the model with same imports, otherwise there'll
+#be problems.
+
 import tensorflow as tf
 import base64
 import numpy as np
