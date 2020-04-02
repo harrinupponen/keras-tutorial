@@ -69,7 +69,7 @@ test_samples = np.array(test_samples)
 scaler2 = MinMaxScaler(feature_range=(0,1))
 scaled_test_samples = scaler2.fit_transform((test_samples).reshape(-1,1))
 
-#create the model (layers)
+#-------------------Create the model (layers)---------------------
 model = Sequential([
     Dense(16, input_shape=(1,), activation='relu'),
     Dense(32, activation='relu'),
@@ -79,11 +79,18 @@ model = Sequential([
 #print out the details of the model
 #model.summary()
 
-#--------------------------Compile and Fit--------------------------
+#--------------------------Compile and Train--------------------------
 
 #compile the model
 model.compile(Adam(lr=.0001), loss='sparse_categorical_crossentropy', metrics=['accuracy'])
-model.fit(scaled_train_samples, train_lables, validation_split=0.1, batch_size=10, epochs=20, shuffle=True, verbose=2)
+
+model.fit(scaled_train_samples, #training data
+train_lables,                   #labels/classes
+validation_split=0.1,           #splits the training data: 90% training, 10% validation
+batch_size=10,                  #takes 10 samples at a time for training
+epochs=20,                      #How many "rounds" of training
+shuffle=True,                   #Shuffles the data = better training
+verbose=2)                      #Shows a progress bar and "Epoch 1/20..2/20..3/20.." etc. | 0=shows nothing | 1=shows the progress bar
 
 #--------------------------Predictions-----------------------------
 
@@ -136,8 +143,8 @@ def plot_confusion_matrix(cm, classes, normalize=False, title='Confusion matrix'
 
 #----------------- Use Confusion Matrix---------------------
 
-cm_plot_labels = ['no_side_effects', 'had_side_effects']
-plot_confusion_matrix(cm, cm_plot_labels, title='Confusion Matrix')
+cm_plot_labels = ['no_side_effects', 'had_side_effects']                #Imaginary case, different aged people had or had not side effects
+plot_confusion_matrix(cm, cm_plot_labels, title='Confusion Matrix')     #from particular medicines
 plt.show()
 
 #-------------------------Save Model, 3 different ways--------------------
